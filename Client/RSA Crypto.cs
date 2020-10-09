@@ -31,7 +31,7 @@ namespace Client
             return sw.ToString();
         }*/
 
-        public byte[] Encrypt(string plaintext, string publicKey)
+        public byte[] Encrypt(string plainText, string publicKey)
         {
             /*csp = new RSACryptoServiceProvider();
             csp.ImportParameters(_publicKey);
@@ -42,7 +42,7 @@ namespace Client
             var rsaClient = new RSACryptoServiceProvider(2048);
             rsaClient.FromXmlString(publicKey);
             //csp.FromXmlString(publicKey);
-            var data = Encoding.UTF8.GetBytes(plaintext);
+            var data = Encoding.UTF8.GetBytes(plainText);
             var cypherText = rsaClient.Encrypt(data, false);
             return cypherText;
         }
@@ -77,6 +77,31 @@ namespace Client
         {
             var plainText = csp.Decrypt(cypherText, false);
             return plainText;
+        }
+        public bool VerifyData(string publicKey,string plainText,byte[] signature)
+        {
+            bool result;
+            var converter = new ASCIIEncoding();
+            var rsaRead = new RSACryptoServiceProvider();
+            rsaRead.FromXmlString(publicKey);
+            byte[] plainText_b = converter.GetBytes(plainText);
+            ///byte[] signature_b = converter.GetBytes(signature);
+            if (rsaRead.VerifyData(plainText_b,new SHA1CryptoServiceProvider(),signature))
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+        }
+        public byte[] SignatureGen(string plainText)
+        {
+            var converter = new ASCIIEncoding();
+            byte[] plainText_b = converter.GetBytes(plainText);
+            byte[] signature_b = csp.SignData(plainText_b, new SHA1CryptoServiceProvider());
+            return signature_b;
         }
     }
 }

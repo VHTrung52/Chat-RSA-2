@@ -7,3 +7,12 @@ E:\$_School\4_1\Mã Hoá\Project\Chat App\Chat App\obj\Debug\Chat App.csproj.Cor
 E:\$_School\4_1\Mã Hoá\Project\Chat App\Chat App\obj\Debug\Chat App.exe
 E:\$_School\4_1\Mã Hoá\Project\Chat App\Chat App\obj\Debug\Chat App.pdb
 E:\$_School\4_1\Mã Hoá\Project\Chat App\Chat App\obj\Debug\Chat_App.Form1.resources
+E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Chat App\bin\Debug\Chat App.exe.config
+E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Chat App\bin\Debug\Chat App.exe
+E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Chat App\bin\Debug\Chat App.pdb
+E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Chat App\obj\Debug\Chat_App.Form1.resources
+E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Chat App\obj\Debug\Chat_App.Properties.Resources.resources
+E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Chat App\obj\Debug\Chat App.csproj.GenerateResource.cache
+E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Chat App\obj\Debug\Chat App.csproj.CoreCompileInputs.cache
+E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Chat App\obj\Debug\Chat App.exe
+E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Chat App\obj\Debug\Chat App.pdb

@@ -86,10 +86,11 @@ namespace Client
                 cmbIP.SelectedItem.ToString() != string.Empty &&
                 cmbIP.SelectedItem.ToString() != "none")
             {
+                string msg = txbMessage.Text;
                 string publicKey = ChoosePublicKey(cmbIP.SelectedItem.ToString());
-                string cypher = Convert.ToBase64String(RSA_Crypto.Encrypt(txbMessage.Text, publicKey));
-                //client.Send(Serialize(client.LocalEndPoint.ToString() + "|" + cmbIP.SelectedItem.ToString() + "| " + txbMessage.Text));
-                client.Send(Serialize(client.LocalEndPoint.ToString() + "|" + cmbIP.SelectedItem.ToString() + "| " + cypher));
+                string signature = Convert.ToBase64String(RSA_Crypto.SignatureGen(msg));
+                string cypher = Convert.ToBase64String(RSA_Crypto.Encrypt(msg, publicKey));
+                client.Send(Serialize(client.LocalEndPoint.ToString() + "|" + cmbIP.SelectedItem.ToString() + "|" + cypher + "|" +signature));
             }        
         }
         private string ChoosePublicKey(string ip)
@@ -180,8 +181,11 @@ namespace Client
                     }    
                     else
                     {
-                        string str = RSA_Crypto.Decrypt(Convert.FromBase64String(message.Split('|')[2]));
-                        DisplayText(str, "receive");
+                        string msg = RSA_Crypto.Decrypt(Convert.FromBase64String(message.Split('|')[2]));
+                        string publicKey = ChoosePublicKey(message.Split('|')[0]);
+                        byte[] signature = Convert.FromBase64String(message.Split('|')[3]);
+                        if (RSA_Crypto.VerifyData(publicKey,msg,signature) == true)
+                            DisplayText(msg, "receive");
                     }    
                 }
             }
