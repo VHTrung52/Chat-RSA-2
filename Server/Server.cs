@@ -32,13 +32,13 @@ namespace Server
         {
             if(txbMessage.Text == "check")
             {
-                AddMessage("list client: ");
-                AddMessage(clientList.Count().ToString());
+                DisplayText("list client: ","send");
+                DisplayText(clientList.Count().ToString(),"send");
                 for(int i = 0;i< clientList.Count;i++)
                 {
-                    AddMessage(clientList[i].RemoteEndPoint.ToString());
+                    DisplayText(clientList[i].RemoteEndPoint.ToString(),"send");
                 }
-                AddMessage("end");
+                DisplayText("end","send");
             }    
             else
             {
@@ -46,7 +46,7 @@ namespace Server
                 {
                     Send(item);
                 }
-                AddMessage(txbMessage.Text);
+                DisplayText(txbMessage.Text,"send");
                 txbMessage.Clear();
             }    
             
@@ -80,7 +80,7 @@ namespace Server
                         recieve.Start(client);
                         foreach(Socket item in clientList)
                         {
-                            AddMessage(item.RemoteEndPoint.ToString());
+                            DisplayText(item.RemoteEndPoint.ToString(),"receive");
                         }
                         /*foreach (Socket item in clientList)
                         {
@@ -116,7 +116,7 @@ namespace Server
                 {
                     foreach(Socket skj in clientList)
                     {
-                        AddMessage("server " + skj.RemoteEndPoint);
+                        DisplayText("server " + skj.RemoteEndPoint,"send");
                         Send(ski, "server " + skj.RemoteEndPoint);
                     }
                 }
@@ -156,22 +156,20 @@ namespace Server
                         IP_PK[index, 0] = message.Split('|')[0].Trim();
                         IP_PK[index, 1] = message.Split('|')[2].Trim();
                         index++;
-                        AddMessage("Start");
+                        DisplayText("Start","send");
                         foreach (Socket item in clientList)
                         {
                             for(int i = 0;i<index;i++)
                             {
                                 if (item != null)
                                 {
-                                    AddMessage("server >>"+item.RemoteEndPoint + IP_PK[i, 0] + "|all|" + IP_PK[i, 1]);
+                                    DisplayText("server >>" +item.RemoteEndPoint + IP_PK[i, 0] + "|all|" + IP_PK[i, 1],"send");
                                     item.Send(Serialize(IP_PK[i, 0] + "|all|" + IP_PK[i, 1]));
-                                }    
-                                    
-                            }    
-                            
+                                }              
+                            }     
                         }
-                        AddMessage("end");
-                    }
+                        DisplayText("end","send");
+                    } 
                     else
                     {
                         foreach (Socket item in clientList)
@@ -183,9 +181,7 @@ namespace Server
 
                         }
                     }    
-                        
-
-                    AddMessage("client " + client.RemoteEndPoint.ToString() + " " + message);
+                    DisplayText("client " + client.RemoteEndPoint.ToString() + " " + message,"receive");
                 }
             }
             catch
@@ -195,10 +191,10 @@ namespace Server
             }
             
         }
-        void AddMessage(string s)
+        /*void AddMessage(string s)
         {
             lsvMessage.Items.Add(new ListViewItem() { Text = s });
-        }
+        }*/
         byte[] Serialize(object obj)
         {
             MemoryStream stream = new MemoryStream();
@@ -216,8 +212,52 @@ namespace Server
 
         private void button1_Click(object sender, EventArgs e)
         {
-            lsvMessage.Clear();
+            foreach(Control control in pnlMsg.Controls)
+            {
+                pnlMsg.Controls.Remove(control);
+            }    
+        }
+        private void DisplayText(string text, string type)
+        {
+            Panel panel = new Panel();
+            panel.Size = new Size(pnlMsg.ClientSize.Width, 30);
+            panel.Padding = new Padding(15);
+
+            TextBox textBox = new TextBox();
+            textBox.Text = text;
+            textBox.ReadOnly = true;
+            textBox.BorderStyle = BorderStyle.None;
+            textBox.Size = panel.Size;
+            textBox.Font = new Font("Arial", 14, FontStyle.Bold);
+            if (type == "receive")
+            {
+                panel.BackColor = Color.FromArgb(241, 240, 240);
+                textBox.ForeColor = Color.FromArgb(0, 0, 0);
+                textBox.BackColor = Color.FromArgb(241, 240, 240);
+            }
+            else if (type == "send")
+            {
+                panel.BackColor = Color.FromArgb(0, 153, 255);
+                textBox.ForeColor = Color.FromArgb(255, 255, 255);
+                textBox.BackColor = Color.FromArgb(0, 153, 255);
+            }
+            panel.Controls.Add(textBox);
+            if (this.InvokeRequired)
+            {
+                this.BeginInvoke((MethodInvoker)delegate ()
+                {
+                    this.pnlMsg.Controls.Add(panel);
+                });
+            }
+            else
+            {
+                this.pnlMsg.Controls.Add(panel);
+            }
         }
 
+        private void pnlMsg_ControlAdded(object sender, ControlEventArgs e)
+        {
+            pnlMsg.ScrollControlIntoView(e.Control);
+        }
     }
 }

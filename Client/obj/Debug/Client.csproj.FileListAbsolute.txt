@@ -16,3 +16,4 @@ E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Client\obj\Debug\Client.csproj.Gener
 E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Client\obj\Debug\Client.csproj.CoreCompileInputs.cache
 E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Client\obj\Debug\Client.exe
 E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Client\obj\Debug\Client.pdb
+E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Client\obj\Debug\Client.csprojAssemblyReference.cache

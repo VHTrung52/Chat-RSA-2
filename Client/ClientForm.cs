@@ -20,7 +20,6 @@ namespace Client
         RSA_Crypto RSA_Crypto;
         string[,] IP_PK;
         int index;
-        int imageIndex;
         public ClientForm()
         {
             InitializeComponent();
@@ -29,15 +28,12 @@ namespace Client
             address = new List<string>();
             IP_PK = new string[10, 2];
             index = 0;
-            imageIndex = 0;
             Connect();
-            
-            
+            txbPublicKey.Text = RSA_Crypto.PublicKeyString();
         }
 
         private void btnSend_Click(object sender, EventArgs e)
         {
-
             if (txbMessage.Text == "check")
             {
                 DisplayText("index = " + index,"send");
@@ -53,7 +49,6 @@ namespace Client
                 txbMessage.Clear();
             }
         }
-
         IPEndPoint IP;
         Socket client;
         void Connect()
@@ -110,15 +105,13 @@ namespace Client
         {
             string s = RSA_Crypto.PublicKeyString();
             client.Send(Serialize(client.LocalEndPoint.ToString() + "|all|"+ s));
-            //client.Send(Serialize(RSA_Crypto.PublicKeyString()));
-            /*client.Send(Serialize("hello"));*/
         }
 
         List<string> address;
         
         void Receive()
         {
-             try
+            try
             { 
                 bool check;
                 while (true)
@@ -148,7 +141,7 @@ namespace Client
                             cmbIP.DataSource = bs;
                         }
                     }
-                    else if(message.Contains("all") == true)
+                    else if(message.Contains("|all|") == true)
                     {  
                         string sendPoint = message.Split('|')[0];
                         bool checkD = false;
@@ -175,9 +168,7 @@ namespace Client
                         if(image != null)
                         {
                             DisplayImage(image,"receive");
-                            imageIndex++;
-                    }    
-                            
+                        }                 
                     }    
                     else
                     {
@@ -191,7 +182,6 @@ namespace Client
             }
             catch(Exception e)
             {
-                
                 Close();
             }
         }
@@ -208,14 +198,8 @@ namespace Client
             MemoryStream stream = new MemoryStream(data);
             BinaryFormatter formatter = new BinaryFormatter();
             return formatter.Deserialize(stream);
-            //return stream.ToArray();
         }
         private void txbMessage_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lsvMessage_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
@@ -239,7 +223,6 @@ namespace Client
             string cypher = EncryptImage(image);
             client.Send(Serialize(client.LocalEndPoint.ToString() + "|" + cmbIP.SelectedItem.ToString() + "|Image~" + cypher));
             string[] test = cypher.Split('|');
-
         }
         private string EncryptImage(Image image)
         {
@@ -254,7 +237,14 @@ namespace Client
                 startPoint += 241;
                 var encrypted = RSA_Crypto.EncryptImage(segment, publicKey);
                 cypher += Convert.ToBase64String(encrypted) + "|";
-                //length = length - 241;
+            }
+            if(startPoint < length)
+            {
+                int segmentLength = length - startPoint;
+                byte[] segment = new ArraySegment<byte>(image_byte, startPoint, segmentLength).ToArray();
+                //startPoint += 241;
+                var encrypted = RSA_Crypto.EncryptImage(segment, publicKey);
+                cypher += Convert.ToBase64String(encrypted) + "|";
             }
             return cypher;
             
@@ -270,12 +260,6 @@ namespace Client
                 {
                       var plain = RSA_Crypto.DecryptImage(Convert.FromBase64String(test[i]));
                       testplains.AddRange(plain);
-                        //AddMessage(i.ToString());
-                   
-                    /*else
-                    {
-                        txbMessage.Text += i + test[i];
-                    }   */ 
                 }
             }
             Image image = byteArrayToImage(testplains.ToArray());
@@ -285,7 +269,7 @@ namespace Client
         {
             Image image = null;
             var openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
+            DialogResult result = openFileDialog1.ShowDialog();
             if (result == DialogResult.OK)
             {
                 string text = openFileDialog1.FileName;
@@ -304,7 +288,6 @@ namespace Client
 
                 PictureBox pictureBox = new PictureBox();
                 pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
-                //pictureBox.Size = new Size(80,80);
                 pictureBox.Image = image;
 
                 panel.Controls.Add(pictureBox);
@@ -346,8 +329,7 @@ namespace Client
             return returnImage;
         }
         private void DisplayText(string text,string type)
-        {
-                
+        {       
             Panel panel = new Panel();
             panel.Size = new Size(pnlMsg.ClientSize.Width, 30);
             panel.Padding = new Padding(15);
@@ -384,5 +366,31 @@ namespace Client
             }
         }
 
+        private void pnlMsg_ControlAdded(object sender, ControlEventArgs e)
+        {
+             pnlMsg.ScrollControlIntoView(e.Control);
+        }
+
+        private void btnDisplayPublicKey_Click(object sender, EventArgs e)
+        {
+            txbPublicKey.Text = RSA_Crypto.PublicKeyString();
+
+        }
+
+        private void btnVerifyPublicKey_Click(object sender, EventArgs e)
+        {
+            if (cmbIP.SelectedItem.ToString() != string.Empty &&
+                cmbIP.SelectedItem.ToString() != "none" &&
+                txbPublicKey.Text != string.Empty)
+            {
+                string publicKey1 = ChoosePublicKey(cmbIP.SelectedItem.ToString());
+                string publicKey2 = txbPublicKey.Text;
+                if(publicKey1 == publicKey2)
+                    MessageBox.Show("Khoá công khai hợp lệ", "Kết Quả Xác Thực", MessageBoxButtons.OK);
+                else
+                    MessageBox.Show("Khoá công khai không hợp lệ", "Kết Quả Xác Thực", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
     }
 }

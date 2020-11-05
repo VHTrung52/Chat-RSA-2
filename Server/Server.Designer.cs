@@ -28,25 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lsvMessage = new System.Windows.Forms.ListView();
             this.txbMessage = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.pnlMsg = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
-            // 
-            // lsvMessage
-            // 
-            this.lsvMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lsvMessage.HideSelection = false;
-            this.lsvMessage.Location = new System.Drawing.Point(13, 4);
-            this.lsvMessage.Name = "lsvMessage";
-            this.lsvMessage.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.lsvMessage.Size = new System.Drawing.Size(775, 370);
-            this.lsvMessage.TabIndex = 0;
-            this.lsvMessage.UseCompatibleStateImageBehavior = false;
-            this.lsvMessage.View = System.Windows.Forms.View.List;
             // 
             // txbMessage
             // 
@@ -82,16 +68,27 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // pnlMsg
+            // 
+            this.pnlMsg.AutoScroll = true;
+            this.pnlMsg.BackColor = System.Drawing.Color.White;
+            this.pnlMsg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlMsg.Location = new System.Drawing.Point(12, 12);
+            this.pnlMsg.Name = "pnlMsg";
+            this.pnlMsg.Size = new System.Drawing.Size(776, 363);
+            this.pnlMsg.TabIndex = 4;
+            this.pnlMsg.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.pnlMsg_ControlAdded);
+            // 
             // Server
             // 
             this.AcceptButton = this.btnSend;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.pnlMsg);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.txbMessage);
-            this.Controls.Add(this.lsvMessage);
             this.Name = "Server";
             this.Text = "Server";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Server_FormClosed);
@@ -101,11 +98,10 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListView lsvMessage;
         private System.Windows.Forms.TextBox txbMessage;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.FlowLayoutPanel pnlMsg;
     }
 }
 
