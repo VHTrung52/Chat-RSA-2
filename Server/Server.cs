@@ -184,9 +184,7 @@ namespace Server
             panel.Size = new Size(pnlMsg.ClientSize.Width - 10, 40);
             panel.Padding = new Padding(15);
 
-
             TextBox textBox = new TextBox();
-
             textBox.ReadOnly = true;
             textBox.BorderStyle = BorderStyle.None;
             textBox.Size = panel.Size;

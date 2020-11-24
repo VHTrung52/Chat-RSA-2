@@ -16,3 +16,4 @@ E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Chat App\obj\Debug\Chat App.csproj.G
 E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Chat App\obj\Debug\Chat App.csproj.CoreCompileInputs.cache
 E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Chat App\obj\Debug\Chat App.exe
 E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Chat App\obj\Debug\Chat App.pdb
+E:\$_School\4_1\Mã Hoá\Project\Chat-RSA-2\Chat App\obj\Debug\Chat App.csprojAssemblyReference.cache

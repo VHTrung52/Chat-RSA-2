@@ -16,6 +16,26 @@ using System.Security.Cryptography;
 
 namespace Client
 {
+    // Cơ chế hoạt động
+    // 1. A online
+    // A -> Server : A public key, A end point
+    // Server -> A : Online Clients public key, end point
+    // A thêm B,C vào panel client và panel message
+    // Server -> Online Clients : A public key, A end point
+    // B,C nhận được -> thêm A vào panel client và panel message
+    // 2. A gửi tin nhắn cho B
+    // A mã hoá tin nhắn bằng B public key
+    // A kí vào tin nhắn chưa mã hoá
+    // A -> Server : tin nhắn đã má hoá + chữ kí
+    // Server -> B :  tin nhắn đã má hoá + chữ kí
+    // B dùng private key giải mã và so sánh vs chữ kí 
+    // Nếu đúng B -> Server : tin phản hồi 1
+    // Server -> A : tin phản hồi 1
+    // A thay đổi trạng thái tin nhắn từ đang gửi "sending" -> đã gửi "sent"
+    // Nếu đã đọc B -> Server : tin phản hồi 2
+    // Server -> A : tin phản hồi 2
+    // A thay đổi trạng thái tin nhắn từ đã gửi "sent" -> đã xem "seen"
+
     public partial class ClientForm : Form
     {
         RSA_Crypto RSA_Crypto;
