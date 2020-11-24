@@ -30,11 +30,8 @@
         {
             this.btnSendText = new System.Windows.Forms.Button();
             this.txbMessage = new System.Windows.Forms.TextBox();
-            this.cmbIP = new System.Windows.Forms.ComboBox();
             this.btnSendImage = new System.Windows.Forms.Button();
             this.pnlMsg = new System.Windows.Forms.FlowLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.pnlListClients = new System.Windows.Forms.FlowLayoutPanel();
             this.labelSelectedClient = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -44,9 +41,9 @@
             this.btnSendText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSendText.Location = new System.Drawing.Point(684, 402);
+            this.btnSendText.Location = new System.Drawing.Point(700, 400);
             this.btnSendText.Name = "btnSendText";
-            this.btnSendText.Size = new System.Drawing.Size(104, 44);
+            this.btnSendText.Size = new System.Drawing.Size(88, 38);
             this.btnSendText.TabIndex = 5;
             this.btnSendText.Text = "Send Text";
             this.btnSendText.UseVisualStyleBackColor = true;
@@ -61,33 +58,18 @@
             this.txbMessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txbMessage.Location = new System.Drawing.Point(184, 400);
             this.txbMessage.Name = "txbMessage";
-            this.txbMessage.Size = new System.Drawing.Size(494, 38);
+            this.txbMessage.Size = new System.Drawing.Size(408, 38);
             this.txbMessage.TabIndex = 4;
-            this.txbMessage.TextChanged += new System.EventHandler(this.txbMessage_TextChanged);
-            // 
-            // cmbIP
-            // 
-            this.cmbIP.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbIP.BackColor = System.Drawing.Color.White;
-            this.cmbIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbIP.FormattingEnabled = true;
-            this.cmbIP.Items.AddRange(new object[] {
-            "None"});
-            this.cmbIP.Location = new System.Drawing.Point(184, 349);
-            this.cmbIP.Name = "cmbIP";
-            this.cmbIP.Size = new System.Drawing.Size(494, 39);
-            this.cmbIP.TabIndex = 6;
+            
             // 
             // btnSendImage
             // 
             this.btnSendImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSendImage.Location = new System.Drawing.Point(684, 349);
+            this.btnSendImage.Location = new System.Drawing.Point(598, 400);
             this.btnSendImage.Name = "btnSendImage";
-            this.btnSendImage.Size = new System.Drawing.Size(104, 39);
+            this.btnSendImage.Size = new System.Drawing.Size(96, 38);
             this.btnSendImage.TabIndex = 7;
             this.btnSendImage.Text = "Send Image";
             this.btnSendImage.UseVisualStyleBackColor = true;
@@ -100,29 +82,9 @@
             this.pnlMsg.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlMsg.Location = new System.Drawing.Point(184, 53);
             this.pnlMsg.Name = "pnlMsg";
-            this.pnlMsg.Size = new System.Drawing.Size(604, 281);
+            this.pnlMsg.Size = new System.Drawing.Size(604, 341);
             this.pnlMsg.TabIndex = 8;
             this.pnlMsg.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.pnlMsg_ControlAdded);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(570, 395);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 9;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(461, 394);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 10;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // pnlListClients
             // 
@@ -152,11 +114,8 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.labelSelectedClient);
             this.Controls.Add(this.pnlListClients);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.pnlMsg);
             this.Controls.Add(this.btnSendImage);
-            this.Controls.Add(this.cmbIP);
             this.Controls.Add(this.btnSendText);
             this.Controls.Add(this.txbMessage);
             this.Name = "ClientForm";
@@ -172,11 +131,8 @@
 
         private System.Windows.Forms.Button btnSendText;
         private System.Windows.Forms.TextBox txbMessage;
-        private System.Windows.Forms.ComboBox cmbIP;
         private System.Windows.Forms.Button btnSendImage;
         private System.Windows.Forms.FlowLayoutPanel pnlMsg;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.FlowLayoutPanel pnlListClients;
         private System.Windows.Forms.Label labelSelectedClient;
     }

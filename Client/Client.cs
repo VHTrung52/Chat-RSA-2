@@ -72,5 +72,4 @@ namespace Client
             return state;
         }
     }
-   
 }

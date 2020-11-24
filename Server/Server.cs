@@ -27,36 +27,32 @@ namespace Server
             index = 0;
             Connect();
         }
-
         private void btnSend_Click(object sender, EventArgs e)
         {
-            if(txbMessage.Text == "check")
+            if (txbMessage.Text == "check")
             {
-                DisplayText("list client: ","send");
-                DisplayText(clientList.Count().ToString(),"send");
-                for(int i = 0;i< clientList.Count;i++)
+                DisplayText("list client: ", "send");
+                DisplayText(clientList.Count().ToString(), "send");
+                for (int i = 0; i < clientList.Count; i++)
                 {
-                    DisplayText(clientList[i].RemoteEndPoint.ToString(),"send");
+                    DisplayText(clientList[i].RemoteEndPoint.ToString(), "send");
                 }
-                DisplayText("end","send");
-            }    
+                DisplayText("end", "send");
+            }
             else
             {
                 foreach (Socket item in clientList)
                 {
                     Send(item);
                 }
-                DisplayText(txbMessage.Text,"send");
+                DisplayText(txbMessage.Text, "send");
                 txbMessage.Clear();
-            }    
-            
+            }
         }
-
         private void Server_FormClosed(object sender, FormClosedEventArgs e)
         {
             Close();
         }
-
         IPEndPoint IP;
         Socket server;
         List<Socket> clientList;
@@ -78,24 +74,10 @@ namespace Server
                         Thread recieve = new Thread(Receive);
                         recieve.IsBackground = true;
                         recieve.Start(client);
-                        foreach(Socket item in clientList)
+                        foreach (Socket item in clientList)
                         {
-                            DisplayText(item.RemoteEndPoint.ToString() + " Online","receive");
+                            DisplayText(item.RemoteEndPoint.ToString() + " Online", "receive");
                         }
-                        /*foreach (Socket item in clientList)
-                        {
-                            if (item != null)
-                            {
-                                Send(item, item.RemoteEndPoint.ToString());
-                            }
-                        }*/
-
-
-                        /*foreach (Socket item in clientList)
-                        {
-                            AddMessage(item.RemoteEndPoint.ToString());
-                        }*/
-                        //SendOnlineList();
                     }
                 }
                 catch
@@ -107,27 +89,6 @@ namespace Server
             Listen.IsBackground = true;
             Listen.Start();
         }
-        /*void SendOnlineList()
-        {
-            int count = clientList.Count;
-            if (count > 1)
-            {
-                foreach (Socket ski in clientList)
-                {
-                    string end = ski.RemoteEndPoint.ToString();
-                    foreach(Socket skj in clientList)
-                    {
-                        string data = skj.RemoteEndPoint.ToString();
-                        if(end != data)
-                        {
-                            DisplayText("hello server>>"+ski.RemoteEndPoint +" "+ skj.RemoteEndPoint, "send");
-                            Send(ski, "server " + skj.RemoteEndPoint);
-                        }
-                        
-                    }
-                }
-            }
-        }*/
         void Close()
         {
             server.Close();
@@ -142,7 +103,6 @@ namespace Server
             if (client != null && msg != string.Empty)
                 client.Send(Serialize(msg));
         }
-        
         void Receive(object obj)
         {
             Socket client = obj as Socket;
@@ -151,7 +111,7 @@ namespace Server
                 while (true)
                 {
                     byte[] data = new byte[1024 * 5000];
-                        
+
                     client.Receive(data);
                     string message = (string)Deserialize(data);
                     string MsgType = message.Split('|')[2];
@@ -162,57 +122,40 @@ namespace Server
                         IP_PK[index, 0] = message.Split('|')[0].Trim();
                         IP_PK[index, 1] = message.Split('|')[3].Trim();
                         index++;
-                        DisplayText("Start","send");
+                        DisplayText("Start", "send");
                         foreach (Socket item in clientList)
                         {
                             string endPoint = item.RemoteEndPoint.ToString();
-                            for(int i = 0;i<index;i++)
+                            for (int i = 0; i < index; i++)
                             {
                                 string startPoint = IP_PK[i, 0].ToString();
                                 if (item != null && endPoint != startPoint)
                                 {
-                                    DisplayText("server >> " +item.RemoteEndPoint + " : " + IP_PK[i, 0] + "|ClientData|" + IP_PK[i, 1],"send");
+                                    DisplayText("server >> " + item.RemoteEndPoint + " : " + IP_PK[i, 0] + "|ClientData|" + IP_PK[i, 1], "send");
                                     item.Send(Serialize(IP_PK[i, 0] + "|All|ClientData|" + IP_PK[i, 1]));
-                                }              
-                            }     
+                                }
+                            }
                         }
-                        DisplayText("end","send");
+                        DisplayText("end", "send");
                     }
                     else if (MsgType.Contains("Image") == true || MsgType.Contains("Text") == true || MsgType.Contains("Echo") == true)
                     {
                         string endpoint = message.Split('|')[1].Trim();
-                        
+
                         foreach (Socket item in clientList)
                         {
-                            /*if (item != null && item != client)
-                            item.Send(Serialize(message));*/
                             if (item.RemoteEndPoint.ToString() == endpoint)
                                 item.Send(Serialize(message));
                         }
                         DisplayText(client.RemoteEndPoint.ToString() + " >> " + endpoint + " : " + message, "receive");
                     }
-                    /*else if 
-                    {
-                        string endpoint = message.Split('|')[2].Trim();
-                        DisplayText(client.RemoteEndPoint.ToString() + " >> "+ endpoint + " : " + message, "receive");
-                        foreach (Socket item in clientList)
-                        {
-                            *//*if (item != null && item != client)
-                            item.Send(Serialize(message));*//*
-                            if (item.RemoteEndPoint.ToString() == endpoint)
-                                item.Send(Serialize(message));
-                        }
-                    }  */
-                    
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 clientList.Remove(client);
                 client.Close();
-               // MessageBox.Show(e.ToString());
             }
-            
         }
         byte[] Serialize(object obj)
         {
@@ -228,23 +171,22 @@ namespace Server
             return formatter.Deserialize(stream);
             //return stream.ToArray();
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            foreach(Control control in pnlMsg.Controls)
+            foreach (Control control in pnlMsg.Controls)
             {
                 pnlMsg.Controls.Remove(control);
-            }    
+            }
         }
         private void DisplayText(string text, string type)
         {
             Panel panel = new Panel();
-            panel.Size = new Size(pnlMsg.ClientSize.Width-10, 40);
+            panel.Size = new Size(pnlMsg.ClientSize.Width - 10, 40);
             panel.Padding = new Padding(15);
 
 
             TextBox textBox = new TextBox();
-            
+
             textBox.ReadOnly = true;
             textBox.BorderStyle = BorderStyle.None;
             textBox.Size = panel.Size;
@@ -253,15 +195,6 @@ namespace Server
                 textBox.Text = text.Substring(1, 32768);
             else
                 textBox.Text = text;
-            
-            /*Label textBox = new Label();
-            textBox.Text = text;
-            textBox.Font = new Font("Arial", 14, FontStyle.Bold);
-            textBox.Size = new Size(pnlMsg.ClientSize.Width, 10);*/
-            //Label label = new Label();
-            //label.Text = "Sending";
-            //label.Location = new Point(pnlMsg.ClientSize.Width - 25, 25);
-            //panel.Controls.Add(label);
             if (type == "receive")
             {
                 panel.BackColor = Color.FromArgb(241, 240, 240);
@@ -279,8 +212,6 @@ namespace Server
             {
                 this.BeginInvoke((MethodInvoker)delegate ()
                 {
-                    
-                   
                     this.pnlMsg.Controls.Add(panel);
                 });
             }
@@ -289,7 +220,6 @@ namespace Server
                 this.pnlMsg.Controls.Add(panel);
             }
         }
-
         private void pnlMsg_ControlAdded(object sender, ControlEventArgs e)
         {
             pnlMsg.ScrollControlIntoView(e.Control);
